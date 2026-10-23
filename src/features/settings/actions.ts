@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { settingsSchema } from "./validation";
+import { passwordSchema, settingsSchema } from "./validation";
 
 export type SettingsResult =
   | { ok: true; displayName: string | null; dailyGoal: number; timezone: string }
@@ -53,4 +53,33 @@ export async function saveSettings(formData: FormData): Promise<SettingsResult> 
     dailyGoal: parsed.data.dailyGoal,
     timezone: parsed.data.timezone,
   };
+}
+
+export type PasswordResult =
+  { ok: true } | { ok: false; error: string; fieldErrors?: Record<string, string> };
+
+export async function changePassword(formData: FormData): Promise<PasswordResult> {
+  await requireUser();
+  const parsed = passwordSchema.safeParse({
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
+  });
+
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const issue of parsed.error.issues) {
+      const key = issue.path[0];
+      if (typeof key === "string" && !fieldErrors[key]) fieldErrors[key] = issue.message;
+    }
+    return { ok: false, error: "Check the highlighted fields.", fieldErrors };
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+
+  if (error) {
+    return { ok: false, error: "Could not change the password. Sign in again and retry." };
+  }
+
+  return { ok: true };
 }

@@ -25,3 +25,16 @@ export const settingsSchema = z.object({
       }
     }, "Choose a valid timezone."),
 });
+
+export const passwordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Use at least 8 characters.")
+      .max(72, "Keep your password under 72 characters."),
+    confirmPassword: z.string().min(1, "Repeat the new password."),
+  })
+  .refine((value) => value.password === value.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
+  });

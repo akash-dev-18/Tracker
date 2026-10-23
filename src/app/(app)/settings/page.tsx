@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Download, LogOut, ShieldCheck } from "lucide-react";
+import { Download, KeyRound, LogOut, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Panel, PanelBody, PanelHeader, PanelTitle, SectionHeading } from "@/components/ui/panel";
 import { getProfile, requireUser } from "@/lib/auth";
 import { signOut } from "@/features/auth/actions";
+import { PasswordForm } from "@/features/settings/components/password-form";
 import { SettingsForm } from "@/features/settings/components/settings-form";
 
 export const metadata: Metadata = { title: "Settings" };
@@ -39,6 +40,19 @@ export default async function SettingsPage() {
           </PanelHeader>
           <PanelBody>
             <SettingsForm profile={profile} email={user.email ?? ""} />
+          </PanelBody>
+        </Panel>
+
+        <Panel>
+          <PanelHeader>
+            <div>
+              <PanelTitle>Password</PanelTitle>
+              <p className="text-faint mt-1 text-xs">Choose a new password for this account.</p>
+            </div>
+            <KeyRound className="text-faint size-4" />
+          </PanelHeader>
+          <PanelBody>
+            <PasswordForm />
           </PanelBody>
         </Panel>
 
