@@ -1,0 +1,304 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-ink: #090a0b;
+  --color-carbon: #101215;
+  --color-graphite: #16181c;
+  --color-bone: #e9e5dc;
+  --color-ash: #9b9c9a;
+  --color-faint: #6e7072;
+  --color-copper: #c08a5d;
+  --color-copper-bright: #d3a274;
+  --color-verdigris: #7fa28c;
+  --color-ochre: #c7a45e;
+  --color-clay: #b86a63;
+  --color-line: #ffffff12;
+  --color-line-strong: #ffffff1f;
+  --color-glass: #ffffff0a;
+
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+
+  --shadow-float: 0 24px 60px -32px rgb(0 0 0 / 0.85);
+  --shadow-lift: 0 12px 32px -20px rgb(0 0 0 / 0.8);
+}
+
+@theme inline {
+  --font-sans: "Iosevka Aile", "Iosevka", ui-sans-serif, sans-serif;
+  --font-serif: "Iosevka Etoile", "Iosevka", Georgia, "Times New Roman", serif;
+  --font-mono: "Iosevka", ui-monospace, "SFMono-Regular", monospace;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    border-color: var(--color-line);
+  }
+
+  html {
+    background-color: var(--color-ink);
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-ink);
+    background-image:
+      radial-gradient(900px 620px at 16% -12%, rgb(192 138 93 / 0.07), transparent 70%),
+      radial-gradient(820px 620px at 98% -8%, rgb(127 162 140 / 0.045), transparent 70%),
+      linear-gradient(to bottom, #090a0b 0%, #08090a 100%);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-feature-settings:
+      "ss01" 1,
+      "cv01" 1;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: rgb(192 138 93 / 0.32);
+    color: #fffaf3;
+  }
+
+  :focus-visible {
+    outline: 1px solid rgb(192 138 93 / 0.85);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ffffff14;
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ffffff24;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .glass {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.022)),
+      rgb(9 10 11 / 0.55);
+    border: 1px solid var(--color-line);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      var(--shadow-float);
+    backdrop-filter: blur(20px) saturate(115%);
+    -webkit-backdrop-filter: blur(20px) saturate(115%);
+  }
+
+  .glass-strong {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.025)),
+      rgb(9 10 11 / 0.78);
+    border: 1px solid var(--color-line-strong);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      var(--shadow-float);
+    backdrop-filter: blur(28px) saturate(120%);
+    -webkit-backdrop-filter: blur(28px) saturate(120%);
+  }
+
+  .surface {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.025), rgb(255 255 255 / 0.012));
+    border: 1px solid var(--color-line);
+  }
+
+  .surface-hover {
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .surface-hover:hover {
+    background-color: rgb(255 255 255 / 0.035);
+    border-color: var(--color-line-strong);
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ash);
+  }
+
+  .grid-paper {
+    background-image: radial-gradient(circle, rgb(255 255 255 / 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .hairline-t {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .hairline-b {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .animate-rise {
+    animation: rise 240ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .animate-fade {
+    animation: fade 200ms ease-out both;
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.045), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@layer utilities {
+  .animate-dialog {
+    animation: dialog-in 200ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 220ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 220ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 220ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0.4;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0.4;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
